@@ -8,12 +8,14 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@k-kind/svg-generator": "0.0.4",
     "autoprefixer": "^10.3.1",
     "postcss": "^8.3.5",
     "tailwindcss": "^2.2.4",
     "vue": "^3.0.5"
   },
   "devDependencies": {
+    "@types/node": "^16.3.3",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "@vitejs/plugin-vue": "^1.2.5",
@@ -25,6 +27,8 @@
     "husky": "^7.0.1",
     "lint-staged": "^11.0.1",
     "prettier": "^2.3.2",
+    "stylelint": "^13.13.1",
+    "stylelint-config-recommended": "^5.0.0",
     "typescript": "^4.3.2",
     "vite": "^2.4.2",
     "vue-tsc": "^0.0.24"
