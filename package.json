@@ -38,5 +38,8 @@
     "*.ts": "bash -c tsc --noEmit",
     "*.{js,ts,json,md}": "prettier --write",
     "*.{css,scss}": "stylelint --fix"
+  },
+  "dependencies": {
+    "@k-kind/svg-generator": "0.0.4"
   }
 }
