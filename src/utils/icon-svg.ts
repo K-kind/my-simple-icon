@@ -36,25 +36,20 @@ export const generateSimpleIcon = (
     fill: mainColor
   })
   svg.append(body)
-  // const startTime = Date.now()
-  // for (let i = 0; i < 400; i++) {
-  //   const circle = generateCircle({
-  //     cx: i.toString(),
-  //     cy: i.toString(),
-  //     r: '3',
-  //     fill: 'red'
-  //   })
-  //   svg.appendChild(circle)
-  //   const line = generateLine({
-  //     x1: (512 - i).toString(),
-  //     x2: (512 - i - 1).toString(),
-  //     y1: i.toString(),
-  //     y2: (i + 1).toString(),
-  //     stroke: 'blue'
-  //   })
-  //   svg.appendChild(line)
-  // }
-  // console.log(Date.now() - startTime)
-
   return svg.element
+}
+
+export const updateSimpleIcon = (
+  svg: SVGSVGElement,
+  mainColor: string,
+  backgroundColor: string
+): void => {
+  const backgroundRect = svg.children[0]
+  backgroundRect.setAttribute('fill', backgroundColor)
+
+  const faceCircle = svg.children[1]
+  faceCircle.setAttribute('fill', mainColor)
+
+  const bodyEllipse = svg.children[2]
+  bodyEllipse.setAttribute('fill', mainColor)
 }
