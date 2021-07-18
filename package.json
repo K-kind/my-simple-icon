@@ -7,14 +7,19 @@
     "check-types": "tsc --noEmit",
     "eslint": "eslint src/**/*.ts",
     "eslint:fix": "eslint src/**/*.ts --fix",
-    "lint": "npm run eslint; npm run check-types"
+    "prettier": "prettier -c .",
+    "prettier:fix": "prettier --write .",
+    "lint": "npm run eslint; npm run check-types; npm run prettier",
+    "lint:fix": "npm run eslint:fix; npm run check-types; npm run prettier:fix"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",
     "autoprefixer": "^10.3.1",
     "eslint": "^7.30.0",
+    "eslint-config-prettier": "^8.3.0",
     "postcss": "^8.3.5",
+    "prettier": "^2.3.2",
     "tailwindcss": "^2.2.4",
     "typescript": "^4.3.2",
     "vite": "^2.4.2"

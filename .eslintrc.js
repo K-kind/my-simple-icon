@@ -1,9 +1,9 @@
 module.exports = {
   root: true,
   env: {
-    "browser": true,
+    browser: true,
     es6: true,
-    node: true,
+    node: true
   },
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -12,16 +12,15 @@ module.exports = {
     tsconfigRootDir: __dirname,
     project: ['./tsconfig.json']
   },
-  plugins: [
-    '@typescript-eslint',
-  ],
+  plugins: ['@typescript-eslint'],
   extends: [
     'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:@typescript-eslint/recommended-requiring-type-checking',
+    'prettier'
   ],
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off'
   },
-  "ignorePatterns": [".eslintrc.js"]
-};
+  ignorePatterns: ['.eslintrc.js', 'postcss.config.js', 'tailwind.config.js']
+}
