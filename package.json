@@ -8,13 +8,16 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@jaames/iro": "^5.5.2",
     "@k-kind/svg-generator": "0.0.4",
     "autoprefixer": "^10.3.1",
+    "color-convert": "^2.0.1",
     "postcss": "^8.3.5",
     "tailwindcss": "^2.2.4",
     "vue": "^3.0.5"
   },
   "devDependencies": {
+    "@types/color-convert": "^2.0.0",
     "@types/node": "^16.3.3",
     "@typescript-eslint/eslint-plugin": "^4.28.3",
     "@typescript-eslint/parser": "^4.28.3",

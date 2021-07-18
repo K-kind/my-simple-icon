@@ -6,8 +6,8 @@ module.exports = {
     node: true
   },
   extends: [
-    'plugin:vue/vue3-recommended',
     'eslint:recommended',
+    'plugin:vue/vue3-recommended',
     '@vue/typescript/recommended',
     'prettier'
   ],
@@ -16,6 +16,7 @@ module.exports = {
   },
   plugins: [],
   rules: {
-    '@typescript-eslint/no-non-null-assertion': 'off'
+    '@typescript-eslint/no-non-null-assertion': 'off',
+    '@typescript-eslint/no-explicit-any': 'off'
   }
 }
