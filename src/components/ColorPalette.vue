@@ -1,5 +1,9 @@
 <template>
-  <div id="picker" ref="pickerContainer" class="w-7/12 mx-auto"></div>
+  <div
+    id="picker"
+    ref="pickerContainer"
+    class="flex justify-center mx-auto w-11/12"
+  ></div>
 </template>
 
 <script lang="ts">
@@ -39,11 +43,27 @@ export default defineComponent({
     }
 
     const initPicker = (initialColor: string) => {
-      const width = state.pickerContainer!.offsetWidth
+      const width = state.pickerContainer!.offsetWidth - 1
       // @ts-expect-error: Error within Library
       state.colorPicker = new iro.ColorPicker('#picker', {
         color: initialColor,
-        width
+        layout: [
+          {
+            component: iro.ui.Wheel,
+            options: {
+              width
+              // borderColor: '#ffffff'
+            }
+          },
+          {
+            component: iro.ui.Slider,
+            options: {
+              width
+              // borderColor: '#000000'
+            }
+          }
+        ]
+        // layoutDirection: 'horizontal'
       })
 
       state.colorPicker!.on('color:change', onColorChange)
