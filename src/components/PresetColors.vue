@@ -1,10 +1,10 @@
 <template>
-  <div class="grid grid-cols-6 gap-1">
+  <div class="grid gap-1 grid-cols-5 auto-rows-auto">
     <div
       v-for="color in presetColors"
       :key="color"
+      class="rounded-md cursor-pointer"
       :style="{ backgroundColor: color }"
-      class="h-10 cursor-pointer rounded-md"
       @click="onColorClick(color)"
     ></div>
   </div>
@@ -16,22 +16,29 @@ import { defineComponent, onMounted } from 'vue'
 const PRESET_COLORS = [
   '#F44336',
   '#E91E63',
-  '#9C27B0',
+  '#F06292',
+  '#AB47BC',
   '#673AB7',
+  '#9575CD',
   '#3F51B5',
   '#2196F3',
   '#03A9F4',
+  '#4FC3F7',
   '#00BCD4',
+  '#4DB6AC',
   '#009688',
   '#4CAF50',
   '#8BC34A',
   '#CDDC39',
-  '#FFEB3B',
+  '#FDD835',
   '#FFC107',
   '#FF9800',
+  '#FF6F00',
   '#FF5722',
   '#795548',
-  '#757575'
+  '#A1887F',
+  '#757575',
+  '#607D8B'
 ]
 
 export default defineComponent({

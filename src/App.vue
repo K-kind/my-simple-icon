@@ -1,22 +1,23 @@
 <template>
   <div class="px-4 py-4 h-screen md:mx-auto md:px-8 md:py-8 md:max-w-xl">
-    <h1 class="mb-4 text-3xl">Simple Icon</h1>
+    <h1 class="mb-5 text-3xl md:mb-7">Simple Icon</h1>
 
-    <div class="relative pb-5">
+    <div class="relative mx-auto pb-5 w-7/12 sm:w-5/12 md:pb-6 md:w-4/12">
       <div
         ref="iconContainer"
-        class="
-          icon-container
-          mx-auto
-          w-6/12
-          border-2
-          rounded-md
-          overflow-hidden
-        "
+        class="icon-container border-2 rounded-md overflow-hidden"
       ></div>
 
       <button
-        class="absolute bottom-2 right-2 p-1 rounded-full"
+        class="
+          change-button
+          absolute
+          bottom-5
+          right-0
+          p-1
+          rounded-full
+          md:bottom-6
+        "
         :style="{
           backgroundColor: changeButtonHovered ? selectedColor : pairColor
         }"
@@ -38,54 +39,20 @@
         </svg>
       </button>
     </div>
-    <PresetColors
-      class="mb-4"
-      :selected-color="selectedColor"
-      @color-select="onColorSelect"
-    />
 
-    <div class="mb-4">
-      <button class="p-1 rounded-full" @click="togglePalette">
-        <svg
-          class="fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          enable-background="new 0 0 24 24"
-          height="24px"
-          viewBox="0 0 24 24"
-          width="24px"
-          fill="#000000"
-        >
-          <g><rect fill="none" height="24" width="24" /></g>
-          <g>
-            <path
-              d="M12,2C6.49,2,2,6.49,2,12s4.49,10,10,10c1.38,0,2.5-1.12,2.5-2.5c0-0.61-0.23-1.2-0.64-1.67c-0.08-0.1-0.13-0.21-0.13-0.33 c0-0.28,0.22-0.5,0.5-0.5H16c3.31,0,6-2.69,6-6C22,6.04,17.51,2,12,2z M17.5,13c-0.83,0-1.5-0.67-1.5-1.5c0-0.83,0.67-1.5,1.5-1.5 s1.5,0.67,1.5,1.5C19,12.33,18.33,13,17.5,13z M14.5,9C13.67,9,13,8.33,13,7.5C13,6.67,13.67,6,14.5,6S16,6.67,16,7.5 C16,8.33,15.33,9,14.5,9z M5,11.5C5,10.67,5.67,10,6.5,10S8,10.67,8,11.5C8,12.33,7.33,13,6.5,13S5,12.33,5,11.5z M11,7.5 C11,8.33,10.33,9,9.5,9S8,8.33,8,7.5C8,6.67,8.67,6,9.5,6S11,6.67,11,7.5z"
-            />
-          </g>
-        </svg>
-      </button>
-      <span ref="paletteButton" @click="togglePalette"> </span>
+    <div class="grid gap-4 grid-cols-2 mb-4 p-3 border-2 rounded-md md:mb-6">
+      <PresetColors
+        :selected-color="selectedColor"
+        @color-select="onColorSelect"
+      />
 
-      <div
-        id="tooltip"
-        ref="paletteContainer"
-        class="z-20 p-4 w-52 bg-white border-2 rounded-md"
-        :class="{ 'palette-hidden': !paletteVisible }"
-      >
-        <ColorPalette
-          :selected-color="selectedColor"
-          @color-select="onColorSelect"
-        />
-        <div id="arrow" class="before:border-2" data-popper-arrow></div>
-      </div>
-
-      <div
-        v-show="paletteVisible"
-        class="fixed z-10 left-0 top-0 w-screen h-screen opacity-0"
-        @click="togglePalette"
-      ></div>
+      <ColorPalette
+        :selected-color="selectedColor"
+        @color-select="onColorSelect"
+      />
     </div>
 
-    <div class="flex align-middle">
+    <div class="flex justify-center align-middle">
       <div class="relative mr-4 w-4/12">
         <select
           v-model="selectedExtension"
@@ -174,7 +141,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, reactive, toRefs } from 'vue'
-import { createPopper, preventOverflow } from '@popperjs/core'
 import '@/assets/style.css'
 import { generateSimpleIcon, updateSimpleIcon } from '@/utils/icon-svg'
 import { getPairColor } from '@/utils/color'
@@ -257,24 +223,8 @@ export default defineComponent({
       downloadImage(type, svg, filename)
     }
 
-    const initPopper = () => {
-      createPopper(state.paletteButton!, state.paletteContainer!, {
-        placement: 'right',
-        modifiers: [
-          preventOverflow,
-          {
-            name: 'offset',
-            options: {
-              offset: [0, 10]
-            }
-          }
-        ]
-      })
-    }
-
     onMounted(() => {
       initSVG()
-      initPopper()
     })
 
     return {
@@ -295,36 +245,7 @@ export default defineComponent({
   height: auto;
 }
 
-#tooltip {
-  transition: 0.2s opacity ease-out, 0.2s visibility ease-out;
-}
-
-#tooltip.palette-hidden {
-  visibility: hidden;
-  opacity: 0;
-}
-
-#arrow,
-#arrow::before {
-  position: absolute;
-  width: 12px;
-  height: 12px;
-  background: inherit;
-}
-
-#arrow {
-  visibility: hidden;
-}
-
-#arrow::before {
-  visibility: visible;
-  content: '';
-  transform: rotate(45deg);
-  border: solid rgb(229, 231, 235);
-  border-width: 0 0 2px 2px;
-}
-
-#tooltip[data-popper-placement^='right'] > #arrow {
-  left: -8px;
+.change-button {
+  right: -48px;
 }
 </style>
