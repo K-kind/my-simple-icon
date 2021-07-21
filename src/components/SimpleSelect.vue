@@ -44,13 +44,15 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from 'vue'
+import { computed, defineComponent, PropType } from 'vue'
 
 export default defineComponent({
   inheritAttrs: false,
   props: {
     modelValue: {
-      type: [String, Number, Object],
+      type: [String, Number, Object] as PropType<
+        string | number | Record<string, unknown>
+      >,
       default: null
     }
   },
