@@ -1,63 +1,64 @@
 <template>
-  <div
-    class="mx-auto px-4 py-4 max-w-md min-h-screen md:px-8 md:py-8 md:max-w-xl"
-  >
-    <h1 class="title mb-5 text-3xl md:mb-7">Simple Icon</h1>
+  <div class="flex flex-col min-h-screen">
+    <div class="flex-1 mx-auto p-4 w-full max-w-md md:p-8 md:max-w-xl">
+      <h1 class="title mb-5 text-3xl md:mb-7">Simple Icon</h1>
 
-    <div class="relative mx-auto pb-5 w-7/12 sm:w-5/12 md:pb-6 md:w-4/12">
-      <div
-        ref="iconContainer"
-        class="icon-container border-2 rounded-md overflow-hidden"
-      ></div>
+      <div class="relative mx-auto pb-5 w-7/12 sm:w-5/12 md:pb-6 md:w-4/12">
+        <div
+          ref="iconContainer"
+          class="icon-container border-2 rounded-md overflow-hidden"
+        ></div>
 
-      <ColorToggleButton
-        :main-color="mainColor"
-        :sub-color="subColor"
-        @click="toggleColor"
-      />
-    </div>
-
-    <div
-      class="
-        grid
-        gap-4
-        grid-rows-2
-        mb-4
-        p-3
-        border-2
-        rounded-md
-        sm:grid-cols-2 sm:grid-rows-1
-        md:mb-6
-      "
-    >
-      <PresetColors
-        :selected-color="selectedColor"
-        @color-select="onColorSelect"
-      />
-
-      <ColorPalette
-        class="mx-auto w-6/12 sm:w-11/12"
-        :selected-color="selectedColor"
-        @color-select="onColorSelect"
-      />
-    </div>
-
-    <div class="flex justify-center align-middle mb-6">
-      <div class="relative mr-4 w-4/12">
-        <SimpleSelect v-model="selectedExtension" name="extension">
-          <option
-            v-for="(extension, index) in extensionOptions"
-            :key="extension"
-            :value="extension"
-            :selected="index === 0"
-          >
-            {{ extension }}
-          </option>
-        </SimpleSelect>
+        <ColorToggleButton
+          :main-color="mainColor"
+          :sub-color="subColor"
+          @click="toggleColor"
+        />
       </div>
 
-      <DownloadButton @click="download" />
+      <div
+        class="
+          grid
+          gap-4
+          grid-rows-2
+          mb-4
+          p-3
+          border-2
+          rounded-md
+          sm:grid-cols-2 sm:grid-rows-1
+          md:mb-6
+        "
+      >
+        <PresetColors
+          :selected-color="selectedColor"
+          @color-select="onColorSelect"
+        />
+
+        <ColorPalette
+          class="mx-auto w-6/12 sm:w-11/12"
+          :selected-color="selectedColor"
+          @color-select="onColorSelect"
+        />
+      </div>
+
+      <div class="flex justify-center align-middle mb-3">
+        <div class="relative mr-4 w-4/12">
+          <SimpleSelect v-model="selectedExtension" name="extension">
+            <option
+              v-for="(extension, index) in extensionOptions"
+              :key="extension"
+              :value="extension"
+              :selected="index === 0"
+            >
+              {{ extension }}
+            </option>
+          </SimpleSelect>
+        </div>
+
+        <DownloadButton @click="download" />
+      </div>
     </div>
+    <div class="py-2 text-center text-gray-700 text-sm">© 2021 K-kind</div>
   </div>
 </template>
 
