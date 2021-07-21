@@ -1,5 +1,5 @@
 <template>
-  <div class="px-4 py-4 h-screen md:mx-auto md:px-8 md:py-8 md:max-w-xl">
+  <div class="px-4 py-4 min-h-screen md:mx-auto md:px-8 md:py-8 md:max-w-xl">
     <h1 class="mb-5 text-3xl md:mb-7">Simple Icon</h1>
 
     <div class="relative mx-auto pb-5 w-7/12 sm:w-5/12 md:pb-6 md:w-4/12">
@@ -8,36 +8,11 @@
         class="icon-container border-2 rounded-md overflow-hidden"
       ></div>
 
-      <button
-        class="
-          change-button
-          absolute
-          bottom-5
-          right-0
-          p-1
-          rounded-full
-          md:bottom-6
-        "
-        :style="{
-          backgroundColor: changeButtonHovered ? selectedColor : pairColor
-        }"
-        @click="exchangePair"
-        @mouseover="changeButtonHovered = true"
-        @mouseleave="changeButtonHovered = false"
-      >
-        <svg
-          class="fill-current"
-          xmlns="http://www.w3.org/2000/svg"
-          height="24px"
-          viewBox="0 0 24 24"
-          width="24px"
-        >
-          <path
-            :fill="changeButtonHovered ? pairColor : selectedColor"
-            d="M12 4V2.21c0-.45-.54-.67-.85-.35l-2.8 2.79c-.2.2-.2.51 0 .71l2.79 2.79c.32.31.86.09.86-.36V6c3.31 0 6 2.69 6 6 0 .79-.15 1.56-.44 2.25-.15.36-.04.77.23 1.04.51.51 1.37.33 1.64-.34.37-.91.57-1.91.57-2.95 0-4.42-3.58-8-8-8zm0 14c-3.31 0-6-2.69-6-6 0-.79.15-1.56.44-2.25.15-.36.04-.77-.23-1.04-.51-.51-1.37-.33-1.64.34C4.2 9.96 4 10.96 4 12c0 4.42 3.58 8 8 8v1.79c0 .45.54.67.85.35l2.79-2.79c.2-.2.2-.51 0-.71l-2.79-2.79c-.31-.31-.85-.09-.85.36V18z"
-          />
-        </svg>
-      </button>
+      <ColorToggleButton
+        :main-color="mainColor"
+        :sub-color="subColor"
+        @click="toggleColor"
+      />
     </div>
 
     <div class="grid gap-4 grid-cols-2 mb-4 p-3 border-2 rounded-md md:mb-6">
@@ -52,7 +27,7 @@
       />
     </div>
 
-    <div class="flex justify-center align-middle">
+    <div class="flex justify-center align-middle mb-6">
       <div class="relative mr-4 w-4/12">
         <select
           v-model="selectedExtension"
@@ -147,34 +122,38 @@ import { getPairColor } from '@/utils/color'
 import { EXTENSIONS, Extension, downloadImage } from '@/utils/download'
 import PresetColors from '@/components/PresetColors.vue'
 import ColorPalette from '@/components/ColorPalette.vue'
+import ColorToggleButton from './components/ColorToggleButton.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     PresetColors,
-    ColorPalette
+    ColorPalette,
+    ColorToggleButton
   },
   setup: () => {
     const state = reactive<{
       iconContainer: HTMLElement | null
-      paletteContainer: HTMLElement | null
-      paletteButton: HTMLElement | null
       selectedColor: string
-      pairColor: string
-      paletteVisible: boolean
-      changeButtonHovered: boolean
-      dropDownHeight: number
       selectedExtension: Extension
+      colorToggled: boolean
     }>({
       iconContainer: null,
-      paletteContainer: null,
-      paletteButton: null,
       selectedColor: '',
-      pairColor: '',
-      paletteVisible: false,
-      changeButtonHovered: false,
-      dropDownHeight: 280,
-      selectedExtension: EXTENSIONS.PNG
+      selectedExtension: EXTENSIONS.PNG,
+      colorToggled: false
+    })
+
+    const pairColor = computed(() => {
+      return getPairColor(state.selectedColor)
+    })
+
+    const mainColor = computed(() => {
+      return state.colorToggled ? pairColor.value : state.selectedColor
+    })
+
+    const subColor = computed(() => {
+      return state.colorToggled ? state.selectedColor : pairColor.value
     })
 
     const extensionOptions = computed(() => {
@@ -187,7 +166,7 @@ export default defineComponent({
     }
 
     const initSVG = () => {
-      const icon = generateSimpleIcon(state.selectedColor, state.pairColor)
+      const icon = generateSimpleIcon(mainColor.value, subColor.value)
       state.iconContainer!.appendChild(icon)
     }
 
@@ -195,25 +174,17 @@ export default defineComponent({
       const SVGElement = getSVGElement()
       if (SVGElement == undefined) return
 
-      updateSimpleIcon(SVGElement, state.selectedColor, state.pairColor)
+      updateSimpleIcon(SVGElement, mainColor.value, subColor.value)
     }
 
     const onColorSelect = (color: string) => {
       state.selectedColor = color
-      state.pairColor = getPairColor(state.selectedColor)
       updateSVGColors()
     }
 
-    const exchangePair = () => {
-      ;[state.selectedColor, state.pairColor] = [
-        state.pairColor,
-        state.selectedColor
-      ]
+    const toggleColor = () => {
+      state.colorToggled = !state.colorToggled
       updateSVGColors()
-    }
-
-    const togglePalette = () => {
-      state.paletteVisible = !state.paletteVisible
     }
 
     const download = () => {
@@ -229,10 +200,12 @@ export default defineComponent({
 
     return {
       ...toRefs(state),
+      pairColor,
+      mainColor,
+      subColor,
       extensionOptions,
       onColorSelect,
-      exchangePair,
-      togglePalette,
+      toggleColor,
       download
     }
   }
