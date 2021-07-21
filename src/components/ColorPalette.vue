@@ -1,9 +1,5 @@
 <template>
-  <div
-    id="picker"
-    ref="pickerContainer"
-    class="flex justify-center mx-auto w-11/12"
-  ></div>
+  <div id="picker" ref="pickerContainer" class="flex justify-center"></div>
 </template>
 
 <script lang="ts">
@@ -52,18 +48,15 @@ export default defineComponent({
             component: iro.ui.Wheel,
             options: {
               width
-              // borderColor: '#ffffff'
             }
           },
           {
             component: iro.ui.Slider,
             options: {
               width
-              // borderColor: '#000000'
             }
           }
         ]
-        // layoutDirection: 'horizontal'
       })
 
       state.colorPicker!.on('color:change', onColorChange)

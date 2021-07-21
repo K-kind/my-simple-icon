@@ -17,13 +17,26 @@
       />
     </div>
 
-    <div class="grid gap-4 grid-cols-2 mb-4 p-3 border-2 rounded-md md:mb-6">
+    <div
+      class="
+        grid
+        gap-4
+        grid-rows-2
+        mb-4
+        p-3
+        border-2
+        rounded-md
+        sm:grid-cols-2 sm:grid-rows-1
+        md:mb-6
+      "
+    >
       <PresetColors
         :selected-color="selectedColor"
         @color-select="onColorSelect"
       />
 
       <ColorPalette
+        class="mx-auto w-6/12 sm:w-11/12"
         :selected-color="selectedColor"
         @color-select="onColorSelect"
       />
@@ -56,9 +69,9 @@ import { getPairColor } from '@/utils/color'
 import { EXTENSIONS, Extension, downloadImage } from '@/utils/download'
 import PresetColors from '@/components/PresetColors.vue'
 import ColorPalette from '@/components/ColorPalette.vue'
-import ColorToggleButton from './components/ColorToggleButton.vue'
-import SimpleSelect from './components/SimpleSelect.vue'
-import DownloadButton from './components/DownloadButton.vue'
+import ColorToggleButton from '@/components/ColorToggleButton.vue'
+import SimpleSelect from '@/components/SimpleSelect.vue'
+import DownloadButton from '@/components/DownloadButton.vue'
 
 export default defineComponent({
   name: 'App',
