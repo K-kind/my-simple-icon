@@ -61,3 +61,9 @@ export default defineComponent({
   }
 })
 </script>
+
+<style scoped>
+.change-button {
+  right: -48px;
+}
+</style>

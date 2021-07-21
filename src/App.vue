@@ -1,5 +1,7 @@
 <template>
-  <div class="px-4 py-4 min-h-screen md:mx-auto md:px-8 md:py-8 md:max-w-xl">
+  <div
+    class="mx-auto px-4 py-4 max-w-md min-h-screen md:px-8 md:py-8 md:max-w-xl"
+  >
     <h1 class="mb-5 text-3xl md:mb-7">Simple Icon</h1>
 
     <div class="relative mx-auto pb-5 w-7/12 sm:w-5/12 md:pb-6 md:w-4/12">
@@ -29,24 +31,7 @@
 
     <div class="flex justify-center align-middle mb-6">
       <div class="relative mr-4 w-4/12">
-        <select
-          v-model="selectedExtension"
-          name="extension"
-          class="
-            pr-8
-            px-4
-            py-2
-            w-full
-            text-gray-700
-            bg-gray-200
-            focus:bg-white
-            border border-gray-200
-            focus:border-gray-500
-            rounded
-            focus:outline-none
-            appearance-none
-          "
-        >
+        <SimpleSelect v-model="selectedExtension" name="extension">
           <option
             v-for="(extension, index) in extensionOptions"
             :key="extension"
@@ -55,29 +40,7 @@
           >
             {{ extension }}
           </option>
-        </select>
-        <div
-          class="
-            absolute
-            inset-y-0
-            right-0
-            flex
-            items-center
-            px-2
-            text-gray-700
-            pointer-events-none
-          "
-        >
-          <svg
-            class="w-4 h-4 fill-current"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-          >
-            <path
-              d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"
-            />
-          </svg>
-        </div>
+        </SimpleSelect>
       </div>
 
       <button
@@ -123,13 +86,15 @@ import { EXTENSIONS, Extension, downloadImage } from '@/utils/download'
 import PresetColors from '@/components/PresetColors.vue'
 import ColorPalette from '@/components/ColorPalette.vue'
 import ColorToggleButton from './components/ColorToggleButton.vue'
+import SimpleSelect from './components/SimpleSelect.vue'
 
 export default defineComponent({
   name: 'App',
   components: {
     PresetColors,
     ColorPalette,
-    ColorToggleButton
+    ColorToggleButton,
+    SimpleSelect
   },
   setup: () => {
     const state = reactive<{
@@ -216,9 +181,5 @@ export default defineComponent({
 .icon-container :deep() svg {
   width: 100%;
   height: auto;
-}
-
-.change-button {
-  right: -48px;
 }
 </style>
