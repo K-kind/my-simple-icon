@@ -2,7 +2,7 @@
   <div
     class="mx-auto px-4 py-4 max-w-md min-h-screen md:px-8 md:py-8 md:max-w-xl"
   >
-    <h1 class="mb-5 text-3xl md:mb-7">Simple Icon</h1>
+    <h1 class="title mb-5 text-3xl md:mb-7">Simple Icon</h1>
 
     <div class="relative mx-auto pb-5 w-7/12 sm:w-5/12 md:pb-6 md:w-4/12">
       <div
@@ -164,6 +164,9 @@ export default defineComponent({
 </script>
 
 <style scoped>
+.title {
+  font-family: 'Kite One', sans-serif;
+}
 .icon-container :deep() svg {
   width: 100%;
   height: auto;
