@@ -25,9 +25,11 @@ export default defineComponent({
     const state = reactive<{
       pickerContainer: HTMLElement | null
       colorPicker: iro.ColorPicker | undefined
+      resizeObserver: ResizeObserver | undefined
     }>({
       pickerContainer: null,
-      colorPicker: undefined
+      colorPicker: undefined,
+      resizeObserver: undefined
     })
 
     const emitColorSelect = (color: string) => {
@@ -60,11 +62,15 @@ export default defineComponent({
     }
 
     const setResizeObserver = () => {
-      const observer = new ResizeObserver((mutationRecords) => {
-        const pickerContainerWidth = mutationRecords[0].contentRect.width
+      state.resizeObserver = new ResizeObserver((records) => {
+        const pickerContainerWidth = records[0].contentRect.width
         resizePicker(pickerContainerWidth)
       })
-      observer.observe(state.pickerContainer!)
+      state.resizeObserver.observe(state.pickerContainer!)
+    }
+
+    const removeResizeObserver = () => {
+      state.resizeObserver?.disconnect()
     }
 
     watch(
@@ -81,6 +87,7 @@ export default defineComponent({
 
     onUnmounted(() => {
       removePicker()
+      removeResizeObserver()
     })
 
     return {
