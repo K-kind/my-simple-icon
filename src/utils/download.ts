@@ -18,6 +18,20 @@ export const downloadImage = (
   }
 }
 
+const loadImage = (src: string) => {
+  const img = new Image()
+  return new Promise<HTMLImageElement>((resolve, reject) => {
+    img.onload = () => {
+      resolve(img)
+    }
+    img.onerror = (e) => {
+      console.error(e)
+      reject(e)
+    }
+    img.src = src
+  })
+}
+
 const downloadViaCanvas = async (
   type: typeof EXTENSIONS.PNG | typeof EXTENSIONS.JPG,
   svg: SVGSVGElement,
@@ -26,19 +40,12 @@ const downloadViaCanvas = async (
   const canvas = document.createElement('canvas')
   canvas.width = svg.width.baseVal.value
   canvas.height = svg.height.baseVal.value
-
   const ctx = canvas.getContext('2d')!
-  const image = new Image()
 
   const svgBlob = getSVGBlob(svg)
   const svgUrl = URL.createObjectURL(svgBlob)
-  image.src = svgUrl
+  const image = await loadImage(svgUrl)
 
-  await new Promise((resolve) => {
-    image.onload = () => {
-      resolve(undefined)
-    }
-  })
   ctx.drawImage(image, 0, 0)
   const canvasImageUrl = canvas.toDataURL(`image/${type}`)
   doDownloadFromUrl(canvasImageUrl, `${filename}.${type}`)
@@ -59,7 +66,7 @@ const downloadAsSVG = (svg: SVGSVGElement, filename: string) => {
 const getSVGBlob = (svg: SVGSVGElement) => {
   const svgSource = new XMLSerializer().serializeToString(svg)
   return new Blob([svgSource], {
-    type: 'image/svg+xml;charset=utf-8'
+    type: 'image/svg+xml'
   })
 }
 
