@@ -5,12 +5,7 @@ export const getPairColor = (hex: string): string => {
 
   const h = hsl[0]
   const s = hsl[1]
-  let l = hsl[2]
-  if (l > 80) {
-    l = 65
-  } else {
-    l = 95
-  }
+  const l = hsl[2] > 80 ? 65 : 95
 
   const pairHex = convert.hsl.hex([h, s, l])
   return `#${pairHex}`
