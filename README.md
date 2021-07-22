@@ -9,13 +9,10 @@ https://simple-icon.cf
 
 ### ライブラリ
 
-- Vue 3
+- Vite（Vue3 + TypeScriot）
 - Tailwind CSS
-
-### 開発ツール
-
-- Vite
-- TypeScript
+- @jaames/iro（カラーピッカー）
+- color-convert（カラーコード変換）
 
 ### デプロイ
 
