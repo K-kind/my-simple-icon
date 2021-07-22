@@ -43,20 +43,8 @@ export default defineComponent({
       // @ts-expect-error: Error within Library
       state.colorPicker = new iro.ColorPicker('#picker', {
         color: initialColor,
-        layout: [
-          {
-            component: iro.ui.Wheel,
-            options: {
-              width
-            }
-          },
-          {
-            component: iro.ui.Slider,
-            options: {
-              width
-            }
-          }
-        ]
+        width,
+        layout: [{ component: iro.ui.Wheel }, { component: iro.ui.Slider }]
       })
 
       state.colorPicker!.on('color:change', onColorChange)
@@ -67,15 +55,28 @@ export default defineComponent({
       state.colorPicker = undefined
     }
 
+    const resizePicker = (width: number) => {
+      state.colorPicker?.resize(width)
+    }
+
+    const setResizeObserver = () => {
+      const observer = new ResizeObserver((mutationRecords) => {
+        const pickerContainerWidth = mutationRecords[0].contentRect.width
+        resizePicker(pickerContainerWidth)
+      })
+      observer.observe(state.pickerContainer!)
+    }
+
     watch(
       () => props.selectedColor,
       (color) => {
-        state.colorPicker!.setColors([color])
+        state.colorPicker?.setColors([color])
       }
     )
 
     onMounted(() => {
       initPicker(props.selectedColor)
+      setResizeObserver()
     })
 
     onUnmounted(() => {
